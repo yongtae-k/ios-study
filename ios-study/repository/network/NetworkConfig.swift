@@ -34,6 +34,7 @@ enum ItbookAPIURL {
 
 enum APIError: Error {
     case responseAPIError
+    case pageNotFound
 }
 
 protocol ItbookAPIDataSource {

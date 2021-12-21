@@ -19,7 +19,7 @@ class ios_studyTests: XCTestCase {
     }
 
     func testGetSearchAPIAddress() throws {
-        let query = "한글검색"
+        let query = "mongodb"
         let page = 1
         if let url = ItbookAPIURL.search(query: query, page: page).getUrl() {
             guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else {
@@ -33,7 +33,7 @@ class ios_studyTests: XCTestCase {
     }
     
     func testGetBookDetailAPIAddress() throws {
-        let isbn13 = "abc"
+        let isbn13 = "9781617294136"
         if let url = ItbookAPIURL.bookDetail(isbn13: isbn13).getUrl() {
             guard let encodedIsbn13 = isbn13.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else {
                 XCTFail()
@@ -45,34 +45,52 @@ class ios_studyTests: XCTestCase {
         }
     }
     
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-        let promise = expectation(description: "Completion handler invoked")
+    func testRequestSearchBookAPI() throws {
+        let query = "mongodb"
+        let page = 1
+        
+        let promise = expectation(description: "network request timeout")
         var bookListResponse : BookListResponse?
         
-        ItbookAPIImpl.shared.search(query: "mongodb", page: 1) { result in
+        ItbookAPIImpl.shared.search(query: query, page: page) { result in
             switch result {
             case .success(let item):
                 bookListResponse = item
-                XCTAssertEqual(item.total, "71")
-                break
             case .failure(let error):
-                XCTFail(error.localizedDescription)
-                break
+                XCTFail("result is failure : " + error.localizedDescription)
             case .none:
-                XCTFail("fail")
+                XCTFail("result case is none ")
             }
             promise.fulfill()
         }
         wait(for: [promise], timeout: 5)
         
-        XCTAssertEqual(bookListResponse?.total, "71")
+        XCTAssertNotNil(bookListResponse)
+        XCTAssertGreaterThanOrEqual(Int(bookListResponse?.total ?? "-1") ?? -1, 0)
     }
 
+    func testRequestBookDetailAPI() throws {
+        let isbn13 = "9781617294136"
+        
+        let promise = expectation(description: "network request timeout")
+        var response : BookDetailResponse?
+        
+        ItbookAPIImpl.shared.bookDetail(isbn13: isbn13) { result in
+            switch result {
+            case .success(let item):
+                response = item
+            case .failure(let error):
+                XCTFail("result is failure : " + error.localizedDescription)
+            case .none:
+                XCTFail("result case is none ")
+            }
+            promise.fulfill()
+        }
+        wait(for: [promise], timeout: 5)
+        
+        XCTAssertNotNil(response)
+    }
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {

@@ -16,21 +16,27 @@ class ItbookAPIImpl : ItbookAPIDataSource {
     /// ex) https://api.itbook.store/1.0/search/mongodb/1
     func search(query: String, page: Int, completion: @escaping (Result<BookListResponse, Error>?)->Void) {
         if let url = ItbookAPIURL.search(query: query, page: page).getUrl() {
+            debugPrint(url.absoluteString)
             DispatchQueue.global().async {
                 let task = URLSession.shared.dataTask(with: url) { data, response, error in
                     guard let data = data, error == nil,
-                          let response = response as? HTTPURLResponse,
-                          (200..<400).contains(response.statusCode) else {
+                          let response = response as? HTTPURLResponse else {
                               completion(.failure(error ?? APIError.responseAPIError))
                               return
                           }
-                    
-                    do {
-                        let decoder = JSONDecoder()
-                        let result = try decoder.decode(BookListResponse.self, from: data)
-                        completion(.success(result))
-                    } catch let error {
-                        completion(.failure(error))
+                    switch response.statusCode {
+                    case (200..<400):
+                        do {
+                            let decoder = JSONDecoder()
+                            let result = try decoder.decode(BookListResponse.self, from: data)
+                            completion(.success(result))
+                        } catch let error {
+                            completion(.failure(error))
+                        }
+                    case 404:
+                        completion(.failure(APIError.pageNotFound))
+                    default:
+                        completion(.failure(APIError.responseAPIError))
                     }
                 }
                 task.resume()
@@ -43,21 +49,28 @@ class ItbookAPIImpl : ItbookAPIDataSource {
     /// https://api.itbook.store/1.0/books/9781617294136
     func bookDetail(isbn13: String, completion: @escaping (Result<BookDetailResponse, Error>?)->Void) {
         if let url = ItbookAPIURL.bookDetail(isbn13: isbn13).getUrl() {
+            debugPrint(url.absoluteString)
             DispatchQueue.global().async {
                 let task = URLSession.shared.dataTask(with: url) { data, response, error in
                     guard let data = data, error == nil,
-                          let response = response as? HTTPURLResponse,
-                          (200..<400).contains(response.statusCode) else {
+                          let response = response as? HTTPURLResponse else {
                               completion(.failure(error ?? APIError.responseAPIError))
                               return
                           }
                     
-                    do {
-                        let decoder = JSONDecoder()
-                        let result = try decoder.decode(BookDetailResponse.self, from: data)
-                        completion(.success(result))
-                    } catch let error {
-                        completion(.failure(error))
+                    switch response.statusCode {
+                    case (200..<400):
+                        do {
+                            let decoder = JSONDecoder()
+                            let result = try decoder.decode(BookDetailResponse.self, from: data)
+                            completion(.success(result))
+                        } catch let error {
+                            completion(.failure(error))
+                        }
+                    case 404:
+                        completion(.failure(APIError.pageNotFound))
+                    default:
+                        completion(.failure(APIError.responseAPIError))
                     }
                 }
                 task.resume()
