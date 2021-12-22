@@ -11,6 +11,8 @@ import Foundation
 class ItbookAPIImpl : ItbookAPIDataSource {
     static let shared = ItbookAPIImpl()
     
+    private init() {}
+    
     /// 책 검색 API
     /// https://api.itbook.store/1.0/search/{query}/{page}
     /// ex) https://api.itbook.store/1.0/search/mongodb/1
