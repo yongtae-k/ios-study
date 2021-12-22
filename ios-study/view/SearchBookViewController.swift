@@ -7,47 +7,24 @@
 
 import UIKit
 
-
-class SearchBookTableViewCell: UITableViewCell {
+class SearchBookViewController: UIViewController {
     
-    @IBOutlet weak var bookImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subTitleLabel: UILabel!
-    @IBOutlet weak var isbn13Label: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
-    @IBOutlet weak var urlLabel: UILabel!
-    
-    func updateUI(item: BookListItem) {
-        bookImageView.image = nil
-        titleLabel.text = item.title
-        subTitleLabel.text = item.subtitle
-        isbn13Label.text = item.isbn13
-        priceLabel.text = item.price
-        urlLabel.text = item.url
-    }
-    
-    override func prepareForReuse() {
-        bookImageView.image = nil
-        titleLabel.text = nil
-        subTitleLabel.text = nil
-        isbn13Label.text = nil
-        priceLabel.text = nil
-        urlLabel.text = nil
-    }
-}
-
-
-class SearchBookViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    var searchResult: BookListResponse?
-    var currentPage = 0
+    private var searchResult: BookListResponse?
+    private var isLoading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        requestSearchAPI(query: "mongodb", page: 0)
+        let defultQuery = "mongodb"
+        searchBar.text = defultQuery
+        requestSearchAPI(query: defultQuery, page: 1)
                                         
+    }
+    
+    private func pushBookDetailViewController(item: BookListItem) {
+        performSegue(withIdentifier: "segueBookDetail", sender: item)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -56,11 +33,14 @@ class SearchBookViewController: UIViewController, UITableViewDelegate, UITableVi
             viewController.bundleDate = bookItem
         }
     }
+    
+}
 
+extension SearchBookViewController: UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchResult?.books?.count ?? 0
     }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchBookTableViewCell", for: indexPath) as? SearchBookTableViewCell else {
@@ -70,19 +50,46 @@ class SearchBookViewController: UIViewController, UITableViewDelegate, UITableVi
         if let item = searchResult?.books?[indexPath.row] {
             cell.updateUI(item: item)
         }
+        if indexPath.row == (searchResult?.books?.count ?? 0) - 1,
+           searchResult?.total ?? 0 > searchResult?.books?.count ?? 0,
+           let page = searchResult?.page,
+           let query = searchBar.text {
+            requestSearchAPI(query: query, page: page + 1)
+        }
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = searchResult?.books?[indexPath.row]
-        performSegue(withIdentifier: "segueBookDetail", sender: item)
+        tableView.deselectRow(at: indexPath, animated: true)
+        if let item = searchResult?.books?[indexPath.row] {
+            pushBookDetailViewController(item: item)
+        }
     }
     
-    func requestSearchAPI(query: String, page: Int) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let text = searchBar.text {
+            requestSearchAPI(query: text, page: 1)
+        }
+    }
+    
+}
+
+extension SearchBookViewController {
+    
+    private func requestSearchAPI(query: String, page: Int) {
+        guard !isLoading else {
+            return
+        }
+        isLoading = true
         ItbookAPIImpl.shared.search(query: query, page: page) { [weak self] result in
             switch result {
             case .success(let result):
-                self?.searchResult = result
+                if result.page ?? 1 == 1 {
+                    self?.searchResult = result
+                } else {
+                    self?.searchResult?.page = result.page
+                    self?.searchResult?.books?.append(contentsOf: result.books ?? [])
+                }
             case .failure(let error):
                 self?.searchResult = nil
                 debugPrint("ERROR : " + error.localizedDescription)
@@ -92,8 +99,8 @@ class SearchBookViewController: UIViewController, UITableViewDelegate, UITableVi
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
-            
+            self?.isLoading = false
         }
     }
+    
 }
-

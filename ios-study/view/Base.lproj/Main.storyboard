@@ -24,7 +24,7 @@
             </objects>
             <point key="canvasLocation" x="-929" y="-312"/>
         </scene>
-        <!--Search Book View Controller-->
+        <!--도서검색-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SearchBookViewController" customModule="ios_study" customModuleProvider="target" sceneMemberID="viewController">
@@ -35,6 +35,9 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="mTh-AD-QHo">
                                 <rect key="frame" x="0.0" y="88" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="PSD-39-Mmj"/>
+                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ww2-NP-Sm4">
                                 <rect key="frame" x="0.0" y="139" width="414" height="723"/>
@@ -131,8 +134,9 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ww2-NP-Sm4" secondAttribute="trailing" id="tVk-lp-zQZ"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Us1-Oj-S3V"/>
+                    <navigationItem key="navigationItem" title="도서검색" id="Us1-Oj-S3V"/>
                     <connections>
+                        <outlet property="searchBar" destination="mTh-AD-QHo" id="hNU-5j-hdc"/>
                         <outlet property="tableView" destination="Ww2-NP-Sm4" id="fBA-Iz-aAP"/>
                         <segue destination="1eo-Om-gUx" kind="show" identifier="segueBookDetail" id="QQU-Ku-Q4r"/>
                     </connections>
@@ -267,7 +271,7 @@
                                     <constraint firstItem="DxF-7N-5hQ" firstAttribute="width" secondItem="1dM-3w-3BJ" secondAttribute="width" id="2DJ-jK-OXM"/>
                                     <constraint firstItem="DxF-7N-5hQ" firstAttribute="height" secondItem="UHF-P4-6gM" secondAttribute="height" id="YBY-34-SGg"/>
                                     <constraint firstItem="DxF-7N-5hQ" firstAttribute="top" secondItem="UHF-P4-6gM" secondAttribute="top" id="acZ-WE-DIg"/>
-                                    <constraint firstItem="DxF-7N-5hQ" firstAttribute="trailing" secondItem="UHF-P4-6gM" secondAttribute="trailing" constant="414" id="sJ0-up-YpR"/>
+                                    <constraint firstItem="DxF-7N-5hQ" firstAttribute="trailing" secondItem="UHF-P4-6gM" secondAttribute="trailing" id="sJ0-up-YpR"/>
                                     <constraint firstItem="DxF-7N-5hQ" firstAttribute="leading" secondItem="UHF-P4-6gM" secondAttribute="leading" id="yIM-8N-kse"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="UHF-P4-6gM"/>

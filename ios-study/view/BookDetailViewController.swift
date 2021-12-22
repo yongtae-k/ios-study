@@ -35,23 +35,50 @@ class BookDetailViewController: UIViewController {
         guard let bundleDate = bundleDate, let isbn13 = bundleDate.isbn13 else {
             return
         }
-        updateUI(item: bundleDate)
+        updateUI(bundleDate: bundleDate)
         requestBookDetailAPI(isbn13: isbn13)
-        // Do any additional setup after loading the view.
     }
     
-    func updateUI(item: BookListItem) {
-        bookImageView.image = nil
-        titleLabel.text = "title : \(item.title ?? "")"
-        subtitleLabel.text = "subtitle : \(item.subtitle ?? "")"
-        isbn10Label.text = "isbn13 : \(item.isbn13 ?? "")"
-        priceLabel.text = "price : \(item.price ?? "")"
-        imageLabel.text = "image : \(item.image ?? "")"
-        urlLabel.text = "url : \(item.url ?? "")"
+    func updateUI(bundleDate: BookListItem) {
+        title = bundleDate.title
+        if let urlStirng = bundleDate.image, let url = URL(string: urlStirng) {
+            DownloadURL.shared.getImage(url: url) {[weak self] result in
+                switch result {
+                case .success(let result):
+                    DispatchQueue.main.async {
+                        self?.bookImageView.image = result
+                    }
+                case .failure(let error):
+                    debugPrint("ERROR : " + error.localizedDescription)
+                case .none:
+                    debugPrint("NONE : ")
+                }
+            }
+        }
+        titleLabel.text = "title : \(bundleDate.title ?? "")"
+        subtitleLabel.text = "subtitle : \(bundleDate.subtitle ?? "")"
+        isbn10Label.text = "isbn13 : \(bundleDate.isbn13 ?? "")"
+        priceLabel.text = "price : \(bundleDate.price ?? "")"
+        imageLabel.text = "image : \(bundleDate.image ?? "")"
+        urlLabel.text = "url : \(bundleDate.url ?? "")"
     }
 
     func updateUI(item: BookDetailResponse) {
-        bookImageView.image = nil
+        title = item.title
+        if let urlStirng = item.image, let url = URL(string: urlStirng) {
+            DownloadURL.shared.getImage(url: url) {[weak self] result in
+                switch result {
+                case .success(let result):
+                    DispatchQueue.main.async {
+                        self?.bookImageView.image = result
+                    }
+                case .failure(let error):
+                    debugPrint("ERROR : " + error.localizedDescription)
+                case .none:
+                    debugPrint("NONE : ")
+                }
+            }
+        }
         titleLabel.text = "title : \(item.title ?? "")"
         subtitleLabel.text = "subtitle : \(item.subtitle ?? "")"
         authorsLabel.text = "authors : \(item.authors ?? "")"

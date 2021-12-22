@@ -37,6 +37,10 @@ enum APIError: Error {
     case pageNotFound
 }
 
+enum DownloadImageError: Error {
+    case responseImageDataError
+}
+
 protocol ItbookAPIDataSource {
     func search(query: String, page: Int, completion: @escaping (Result<BookListResponse, Error>?)->Void)
     func bookDetail(isbn13: String, completion: @escaping (Result<BookDetailResponse, Error>?)->Void)
