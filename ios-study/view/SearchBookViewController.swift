@@ -17,6 +17,7 @@ class SearchBookViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let defultQuery = "mongodb"
         searchBar.text = defultQuery
         requestSearchAPI(query: defultQuery, page: 1)

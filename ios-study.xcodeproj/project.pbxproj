@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE8414CC2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8414CB2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift */; };
 		DE853D77277194D80057F6CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE853D76277194D80057F6CA /* AppDelegate.swift */; };
 		DE853D79277194D80057F6CA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE853D78277194D80057F6CA /* SceneDelegate.swift */; };
 		DE853D7B277194D80057F6CA /* SearchBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE853D7A277194D80057F6CA /* SearchBookViewController.swift */; };
@@ -23,6 +24,7 @@
 		DEBD84212772049F00D1F12B /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBD84202772049F00D1F12B /* BookDetailViewController.swift */; };
 		DEC144F427732F77002DEC0D /* DownloadURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC144F327732F77002DEC0D /* DownloadURL.swift */; };
 		DEC144F62773344A002DEC0D /* SearchBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC144F52773344A002DEC0D /* SearchBookTableViewCell.swift */; };
+		DEC144F927734412002DEC0D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC144F827734412002DEC0D /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DE8414CB2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_stydy_imageCacheTests.swift; sourceTree = "<group>"; };
 		DE853D73277194D80057F6CA /* ios-study.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-study.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE853D76277194D80057F6CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE853D78277194D80057F6CA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 		DEBD84202772049F00D1F12B /* BookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
 		DEC144F327732F77002DEC0D /* DownloadURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadURL.swift; sourceTree = "<group>"; };
 		DEC144F52773344A002DEC0D /* SearchBookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookTableViewCell.swift; sourceTree = "<group>"; };
+		DEC144F827734412002DEC0D /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,7 @@
 		DE853D8C277194D90057F6CA /* ios-studyTests */ = {
 			isa = PBXGroup;
 			children = (
+				DE8414CB2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift */,
 				DE853D8D277194D90057F6CA /* ios_studyTests.swift */,
 			);
 			path = "ios-studyTests";
@@ -165,6 +170,7 @@
 			children = (
 				DE87558827719935000573D6 /* model */,
 				DE8755832771981E000573D6 /* network */,
+				DEC144F7277343F9002DEC0D /* local */,
 			);
 			path = repository;
 			sourceTree = "<group>";
@@ -194,6 +200,14 @@
 				DE87558B2771A8FB000573D6 /* BookDetailResponse.swift */,
 			);
 			path = model;
+			sourceTree = "<group>";
+		};
+		DEC144F7277343F9002DEC0D /* local */ = {
+			isa = PBXGroup;
+			children = (
+				DEC144F827734412002DEC0D /* ImageCache.swift */,
+			);
+			path = local;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,6 +341,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEC144F927734412002DEC0D /* ImageCache.swift in Sources */,
 				DE87558E2771A949000573D6 /* NetworkConfig.swift in Sources */,
 				DEC144F427732F77002DEC0D /* DownloadURL.swift in Sources */,
 				DE87558C2771A8FB000573D6 /* BookDetailResponse.swift in Sources */,
@@ -344,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE8414CC2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift in Sources */,
 				DE853D8E277194D90057F6CA /* ios_studyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

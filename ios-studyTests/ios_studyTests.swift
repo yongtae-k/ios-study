@@ -66,7 +66,7 @@ class ios_studyTests: XCTestCase {
         wait(for: [promise], timeout: 5)
         
         XCTAssertNotNil(bookListResponse)
-        XCTAssertGreaterThanOrEqual(Int(bookListResponse?.total ?? "-1") ?? -1, 0)
+        XCTAssertGreaterThanOrEqual(bookListResponse?.total ?? -1, 0)
     }
 
     func testRequestBookDetailAPI() throws {

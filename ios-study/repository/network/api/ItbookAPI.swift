@@ -18,7 +18,7 @@ class ItbookAPIImpl : ItbookAPIDataSource {
     /// ex) https://api.itbook.store/1.0/search/mongodb/1
     func search(query: String, page: Int, completion: @escaping (Result<BookListResponse, Error>?)->Void) {
         if let url = ItbookAPIURL.search(query: query, page: page).getUrl() {
-            debugPrint(url.absoluteString)
+            debugPrint("API REQUEST :: " + url.absoluteString)
             DispatchQueue.global().async {
                 let task = URLSession.shared.dataTask(with: url) { data, response, error in
                     guard let data = data, error == nil,
@@ -51,7 +51,7 @@ class ItbookAPIImpl : ItbookAPIDataSource {
     /// https://api.itbook.store/1.0/books/9781617294136
     func bookDetail(isbn13: String, completion: @escaping (Result<BookDetailResponse, Error>?)->Void) {
         if let url = ItbookAPIURL.bookDetail(isbn13: isbn13).getUrl() {
-            debugPrint(url.absoluteString)
+            debugPrint("API REQUEST :: " + url.absoluteString)
             DispatchQueue.global().async {
                 let task = URLSession.shared.dataTask(with: url) { data, response, error in
                     guard let data = data, error == nil,
