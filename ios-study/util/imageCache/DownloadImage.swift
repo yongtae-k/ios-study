@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-class DownloadURL {
+class DownloadImage {
     
-    static let shared = DownloadURL()
+    static let shared = DownloadImage()
     
     private init() {}
     

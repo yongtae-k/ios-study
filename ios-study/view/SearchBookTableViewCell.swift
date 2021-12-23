@@ -18,18 +18,7 @@ class SearchBookTableViewCell: UITableViewCell {
     
     func updateUI(item: BookListItem) {
         if let urlStirng = item.image, let url = URL(string: urlStirng) {
-            DownloadURL.shared.getImage(url: url) {[weak self] result in
-                switch result {
-                case .success(let result):
-                    DispatchQueue.main.async {
-                        self?.bookImageView.image = result
-                    }
-                case .failure(let error):
-                    debugPrint("ERROR : " + error.localizedDescription)
-                case .none:
-                    debugPrint("NONE : ")
-                }
-            }
+            bookImageView.getImage(url: url)
         }
         titleLabel.text = item.title
         subTitleLabel.text = item.subtitle

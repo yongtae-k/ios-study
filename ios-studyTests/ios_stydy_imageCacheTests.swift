@@ -28,7 +28,7 @@ class ios_stydy_imageCacheTests: XCTestCase {
         ImageCache.Memory.shared.setImageCacheCount(1)
                 
         for imageURL in imageURLs {
-            DownloadURL.shared.getImage(url: imageURL) { result in
+            DownloadImage.shared.getImage(url: imageURL) { result in
                 switch result {
                 case .success(let item):
                     print(item)
@@ -58,7 +58,7 @@ class ios_stydy_imageCacheTests: XCTestCase {
         ImageCache.Disk.shared.setImageCacheCount(1)
                 
         for imageURL in imageURLs {
-            DownloadURL.shared.getImage(url: imageURL) { result in
+            DownloadImage.shared.getImage(url: imageURL) { result in
                 switch result {
                 case .success(let item):
                     ImageCache.Disk.shared.set(url: imageURL, image: item)

@@ -33,7 +33,7 @@ enum ImageCache {
         
         let fileManager = FileManager.default
         var cacheDirectory: URL?
-        var countLimit = 100
+        var countLimit = 10
         
         init() {
             do {

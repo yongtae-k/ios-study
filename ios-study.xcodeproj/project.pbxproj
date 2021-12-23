@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE4E04932774D154009FE40D /* View+Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4E04922774D154009FE40D /* View+Extention.swift */; };
 		DE8414CC2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8414CB2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift */; };
 		DE853D77277194D80057F6CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE853D76277194D80057F6CA /* AppDelegate.swift */; };
 		DE853D79277194D80057F6CA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE853D78277194D80057F6CA /* SceneDelegate.swift */; };
@@ -22,7 +23,7 @@
 		DE87558C2771A8FB000573D6 /* BookDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE87558B2771A8FB000573D6 /* BookDetailResponse.swift */; };
 		DE87558E2771A949000573D6 /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE87558D2771A949000573D6 /* NetworkConfig.swift */; };
 		DEBD84212772049F00D1F12B /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBD84202772049F00D1F12B /* BookDetailViewController.swift */; };
-		DEC144F427732F77002DEC0D /* DownloadURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC144F327732F77002DEC0D /* DownloadURL.swift */; };
+		DEC144F427732F77002DEC0D /* DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC144F327732F77002DEC0D /* DownloadImage.swift */; };
 		DEC144F62773344A002DEC0D /* SearchBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC144F52773344A002DEC0D /* SearchBookTableViewCell.swift */; };
 		DEC144F927734412002DEC0D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC144F827734412002DEC0D /* ImageCache.swift */; };
 /* End PBXBuildFile section */
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DE4E04922774D154009FE40D /* View+Extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extention.swift"; sourceTree = "<group>"; };
 		DE8414CB2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_stydy_imageCacheTests.swift; sourceTree = "<group>"; };
 		DE853D73277194D80057F6CA /* ios-study.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-study.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE853D76277194D80057F6CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,7 +66,7 @@
 		DE87558B2771A8FB000573D6 /* BookDetailResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailResponse.swift; sourceTree = "<group>"; };
 		DE87558D2771A949000573D6 /* NetworkConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
 		DEBD84202772049F00D1F12B /* BookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
-		DEC144F327732F77002DEC0D /* DownloadURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadURL.swift; sourceTree = "<group>"; };
+		DEC144F327732F77002DEC0D /* DownloadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadImage.swift; sourceTree = "<group>"; };
 		DEC144F52773344A002DEC0D /* SearchBookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBookTableViewCell.swift; sourceTree = "<group>"; };
 		DEC144F827734412002DEC0D /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +96,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE4E04902774D12E009FE40D /* util */ = {
+			isa = PBXGroup;
+			children = (
+				DE4E04942774D2ED009FE40D /* imageCache */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		DE4E04942774D2ED009FE40D /* imageCache */ = {
+			isa = PBXGroup;
+			children = (
+				DE4E04922774D154009FE40D /* View+Extention.swift */,
+				DEC144F327732F77002DEC0D /* DownloadImage.swift */,
+				DEC144F827734412002DEC0D /* ImageCache.swift */,
+			);
+			path = imageCache;
+			sourceTree = "<group>";
+		};
 		DE853D6A277194D80057F6CA = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +140,7 @@
 				DE87557F27719763000573D6 /* supporting files */,
 				DE875581277197B8000573D6 /* view */,
 				DE875582277197FE000573D6 /* repository */,
+				DE4E04902774D12E009FE40D /* util */,
 			);
 			path = "ios-study";
 			sourceTree = "<group>";
@@ -170,7 +191,6 @@
 			children = (
 				DE87558827719935000573D6 /* model */,
 				DE8755832771981E000573D6 /* network */,
-				DEC144F7277343F9002DEC0D /* local */,
 			);
 			path = repository;
 			sourceTree = "<group>";
@@ -179,18 +199,9 @@
 			isa = PBXGroup;
 			children = (
 				DE87558D2771A949000573D6 /* NetworkConfig.swift */,
-				DE8755842771984B000573D6 /* api */,
-				DEC144F327732F77002DEC0D /* DownloadURL.swift */,
-			);
-			path = network;
-			sourceTree = "<group>";
-		};
-		DE8755842771984B000573D6 /* api */ = {
-			isa = PBXGroup;
-			children = (
 				DE87558627719911000573D6 /* ItbookAPI.swift */,
 			);
-			path = api;
+			path = network;
 			sourceTree = "<group>";
 		};
 		DE87558827719935000573D6 /* model */ = {
@@ -200,14 +211,6 @@
 				DE87558B2771A8FB000573D6 /* BookDetailResponse.swift */,
 			);
 			path = model;
-			sourceTree = "<group>";
-		};
-		DEC144F7277343F9002DEC0D /* local */ = {
-			isa = PBXGroup;
-			children = (
-				DEC144F827734412002DEC0D /* ImageCache.swift */,
-			);
-			path = local;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,12 +346,13 @@
 			files = (
 				DEC144F927734412002DEC0D /* ImageCache.swift in Sources */,
 				DE87558E2771A949000573D6 /* NetworkConfig.swift in Sources */,
-				DEC144F427732F77002DEC0D /* DownloadURL.swift in Sources */,
+				DEC144F427732F77002DEC0D /* DownloadImage.swift in Sources */,
 				DE87558C2771A8FB000573D6 /* BookDetailResponse.swift in Sources */,
 				DE87558727719911000573D6 /* ItbookAPI.swift in Sources */,
 				DEC144F62773344A002DEC0D /* SearchBookTableViewCell.swift in Sources */,
 				DE87558A2771A100000573D6 /* BookSearchResultResponse.swift in Sources */,
 				DE853D7B277194D80057F6CA /* SearchBookViewController.swift in Sources */,
+				DE4E04932774D154009FE40D /* View+Extention.swift in Sources */,
 				DE853D77277194D80057F6CA /* AppDelegate.swift in Sources */,
 				DEBD84212772049F00D1F12B /* BookDetailViewController.swift in Sources */,
 				DE853D79277194D80057F6CA /* SceneDelegate.swift in Sources */,
