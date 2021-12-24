@@ -8,7 +8,7 @@
 import XCTest
 @testable import ios_study
 
-class ios_studyTests: XCTestCase {
+class ios_study_APITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -66,7 +66,7 @@ class ios_studyTests: XCTestCase {
         wait(for: [promise], timeout: 5)
         
         XCTAssertNotNil(bookListResponse)
-        XCTAssertGreaterThanOrEqual(Int(bookListResponse?.total ?? "-1") ?? -1, 0)
+        XCTAssertGreaterThanOrEqual(bookListResponse?.total ?? -1, 0)
     }
 
     func testRequestBookDetailAPI() throws {

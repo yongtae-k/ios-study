@@ -42,7 +42,7 @@ class BookDetailViewController: UIViewController {
     func updateUI(bundleDate: BookListItem) {
         title = bundleDate.title
         if let urlStirng = bundleDate.image, let url = URL(string: urlStirng) {
-            DownloadURL.shared.getImage(url: url) {[weak self] result in
+            DownloadImage.shared.getImage(url: url) {[weak self] result in
                 switch result {
                 case .success(let result):
                     DispatchQueue.main.async {
@@ -66,18 +66,7 @@ class BookDetailViewController: UIViewController {
     func updateUI(item: BookDetailResponse) {
         title = item.title
         if let urlStirng = item.image, let url = URL(string: urlStirng) {
-            DownloadURL.shared.getImage(url: url) {[weak self] result in
-                switch result {
-                case .success(let result):
-                    DispatchQueue.main.async {
-                        self?.bookImageView.image = result
-                    }
-                case .failure(let error):
-                    debugPrint("ERROR : " + error.localizedDescription)
-                case .none:
-                    debugPrint("NONE : ")
-                }
-            }
+            bookImageView.getImage(url: url)
         }
         titleLabel.text = "title : \(item.title ?? "")"
         subtitleLabel.text = "subtitle : \(item.subtitle ?? "")"
