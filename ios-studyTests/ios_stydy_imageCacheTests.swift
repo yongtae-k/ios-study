@@ -26,8 +26,8 @@ class ios_stydy_imageCacheTests: XCTestCase {
         
         ImageCache.Memory.shared.removeAll()
         ImageCache.Memory.shared.setImageCacheCount(1)
-                
-        for imageURL in imageURLs {
+
+        imageURLs.forEach { imageURL in
             DownloadImage.shared.getImage(url: imageURL) { result in
                 switch result {
                 case .success(let item):
@@ -37,12 +37,12 @@ class ios_stydy_imageCacheTests: XCTestCase {
                 case .none:
                     XCTFail("result case is none ")
                 }
-                if imageURL == imageURLs[1] {
+                if imageURL == imageURLs.last {
                     promise.fulfill()
                 }
             }
         }
-        wait(for: [promise], timeout: 10)
+        wait(for: [promise], timeout: 5)
         XCTAssertNil(ImageCache.Memory.shared.get(url: imageURLs[0]))
         XCTAssertNotNil(ImageCache.Memory.shared.get(url: imageURLs[1]))
         
@@ -53,11 +53,9 @@ class ios_stydy_imageCacheTests: XCTestCase {
                          URL(string: "https://itbook.store/img/books/9781484211830.png")!]
         
         let promise = expectation(description: "network request timeout")
-        
-        ImageCache.Disk.shared.removeAll()
         ImageCache.Disk.shared.setImageCacheCount(1)
-                
-        for imageURL in imageURLs {
+        
+        imageURLs.forEach { imageURL in
             DownloadImage.shared.getImage(url: imageURL) { result in
                 switch result {
                 case .success(let item):
@@ -68,12 +66,15 @@ class ios_stydy_imageCacheTests: XCTestCase {
                 case .none:
                     XCTFail("result case is none ")
                 }
-                if imageURL == imageURLs[1] {
+                if imageURL == imageURLs.last {
+                    ImageCache.Disk.shared.checkLimit()
                     promise.fulfill()
+
                 }
             }
         }
-        wait(for: [promise], timeout: 10)
+        
+        wait(for: [promise], timeout: 5)
         XCTAssertNil(ImageCache.Disk.shared.get(url: imageURLs[0]))
         XCTAssertNotNil(ImageCache.Disk.shared.get(url: imageURLs[1]))
         

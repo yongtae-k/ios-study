@@ -11,21 +11,21 @@ import UIKit
 class DownloadImage {
     
     static let shared = DownloadImage()
-    
+    private let isDebugMode = true
     private init() {}
     
     func getImage(url: URL, completion: @escaping (Result<UIImage, Error>?)->Void) {
         if let image = ImageCache.Memory.shared.get(url: url) {
-            debugPrint("MEMORY CACHE HIT!! :: " + url.absoluteString)
+            if isDebugMode { debugPrint("MEMORY CACHE HIT!! :: " + url.absoluteString) }
             completion(.success(image))
             
         } else if let image = ImageCache.Disk.shared.get(url: url) {
-            debugPrint("Disk CACHE HIT!! :: " + url.absoluteString)
+            if isDebugMode { debugPrint("Disk CACHE HIT!! :: " + url.absoluteString) }
             ImageCache.Memory.shared.set(url: url, image: image)
             completion(.success(image))
             
         } else {
-            debugPrint(url.absoluteString)
+            if isDebugMode { debugPrint(url.absoluteString) }
             DispatchQueue.global().async {
                 let task = URLSession.shared.dataTask(with: url) { data, response, error in
                     guard let data = data, error == nil,

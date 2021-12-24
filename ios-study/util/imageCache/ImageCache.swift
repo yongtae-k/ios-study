@@ -19,7 +19,7 @@ enum ImageCache {
     class Memory {
         static let shared = Memory()
         private init() {
-            setImageCacheCount(5)
+            setImageCacheCount(30)
         }
         private let imageCache = NSCache<NSString, UIImage>()
         
@@ -30,10 +30,10 @@ enum ImageCache {
     
     class Disk {
         static let shared = Disk()
-        
+        private let isDebugMode = true
         let fileManager = FileManager.default
         var cacheDirectory: URL?
-        var countLimit = 10
+        var countLimit = 100
         
         init() {
             do {
@@ -44,9 +44,10 @@ enum ImageCache {
                 debugPrint(error.localizedDescription)
             }
             
+            // 주기적으로 디스크 캐시 이미지 정리 (5초)
             DispatchQueue.global().async {
                 Timer.scheduledTimer(withTimeInterval: 5, repeats: true) {[weak self] _ in
-                    debugPrint("[CACHE TIMER START]")
+                    if self?.isDebugMode ?? false { debugPrint("[DISK CACHE MANAGE TIMER START]") }
                     self?.checkLimit()
                 }
                 RunLoop.current.run()
@@ -60,6 +61,7 @@ enum ImageCache {
     
 }
 
+/// 메모리 캐시 구현
 extension ImageCache.Memory: ImageCacheable {
     
     func get(url: URL) -> UIImage? {
@@ -80,6 +82,7 @@ extension ImageCache.Memory: ImageCacheable {
     
 }
 
+/// 디스크 캐시 구현
 extension ImageCache.Disk: ImageCacheable {
     
     func get(url: URL) -> UIImage? {
@@ -151,19 +154,24 @@ extension ImageCache.Disk: ImageCacheable {
         }
     }
     
-    private func checkLimit() {
+    func checkLimit() {
         do {
             guard let cacheDirectory = cacheDirectory else {
                 return
             }
-            let fileNames = try fileManager.contentsOfDirectory(atPath: cacheDirectory.path)
-            if fileNames.count >= countLimit {
-                for fileName in fileNames[0...(fileNames.count - countLimit)] {
-                    debugPrint("DISK CACHA REMOVE !! \(fileName)")
-                    if fileName.hasSuffix(".png") || fileName.hasSuffix(".jpg") {
-                        let filePath = URL(fileURLWithPath: cacheDirectory.path).appendingPathComponent(fileName).absoluteURL
-                        try fileManager.removeItem(at: filePath)
-                    }
+            var fileURLs = try fileManager.contentsOfDirectory(at: cacheDirectory,
+                                                                includingPropertiesForKeys: [.contentModificationDateKey],
+                                                                options: [.skipsHiddenFiles, .skipsSubdirectoryDescendants])
+            if fileURLs.count > countLimit {
+                try fileURLs.sort {
+                    let date0 = try $0.promisedItemResourceValues(forKeys:[.contentModificationDateKey]).contentModificationDate ?? Date()
+                    let date1 = try $1.promisedItemResourceValues(forKeys:[.contentModificationDateKey]).contentModificationDate ?? Date()
+                    return date0.compare(date1) == .orderedAscending
+                }
+                let limoveSize = fileURLs.count - countLimit
+                for fileUrl in fileURLs[0..<limoveSize] {
+                    if isDebugMode { debugPrint("DISK CACHA REMOVE !! \(fileUrl.lastPathComponent)") }
+                    try fileManager.removeItem(at: fileUrl)
                 }
             }
         } catch let error {

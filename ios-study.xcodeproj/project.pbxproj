@@ -15,7 +15,7 @@
 		DE853D7E277194D80057F6CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE853D7C277194D80057F6CA /* Main.storyboard */; };
 		DE853D80277194D90057F6CA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE853D7F277194D90057F6CA /* Assets.xcassets */; };
 		DE853D83277194D90057F6CA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE853D81277194D90057F6CA /* LaunchScreen.storyboard */; };
-		DE853D8E277194D90057F6CA /* ios_studyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE853D8D277194D90057F6CA /* ios_studyTests.swift */; };
+		DE853D8E277194D90057F6CA /* ios_study_APITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE853D8D277194D90057F6CA /* ios_study_APITests.swift */; };
 		DE853D98277194D90057F6CA /* ios_studyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE853D97277194D90057F6CA /* ios_studyUITests.swift */; };
 		DE853D9A277194D90057F6CA /* ios_studyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE853D99277194D90057F6CA /* ios_studyUITestsLaunchTests.swift */; };
 		DE87558727719911000573D6 /* ItbookAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE87558627719911000573D6 /* ItbookAPI.swift */; };
@@ -57,7 +57,7 @@
 		DE853D82277194D90057F6CA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE853D84277194D90057F6CA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE853D89277194D90057F6CA /* ios-studyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-studyTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DE853D8D277194D90057F6CA /* ios_studyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_studyTests.swift; sourceTree = "<group>"; };
+		DE853D8D277194D90057F6CA /* ios_study_APITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_study_APITests.swift; sourceTree = "<group>"; };
 		DE853D93277194D90057F6CA /* ios-studyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-studyUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE853D97277194D90057F6CA /* ios_studyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_studyUITests.swift; sourceTree = "<group>"; };
 		DE853D99277194D90057F6CA /* ios_studyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_studyUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -148,8 +148,8 @@
 		DE853D8C277194D90057F6CA /* ios-studyTests */ = {
 			isa = PBXGroup;
 			children = (
+				DE853D8D277194D90057F6CA /* ios_study_APITests.swift */,
 				DE8414CB2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift */,
-				DE853D8D277194D90057F6CA /* ios_studyTests.swift */,
 			);
 			path = "ios-studyTests";
 			sourceTree = "<group>";
@@ -364,7 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE8414CC2774489B00CAD2CA /* ios_stydy_imageCacheTests.swift in Sources */,
-				DE853D8E277194D90057F6CA /* ios_studyTests.swift in Sources */,
+				DE853D8E277194D90057F6CA /* ios_study_APITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

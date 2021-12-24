@@ -15,13 +15,20 @@ class SearchBookViewController: UIViewController {
     private var searchResult: BookListResponse?
     private var isLoading = false
 
+    private var searchQuery: String? {
+        didSet {
+            guard let query = searchQuery else {
+                searchBar.text = nil
+                return
+            }
+            searchBar.text = query
+            requestSearchAPI(query: query, page: 1)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let defultQuery = "mongodb"
-        searchBar.text = defultQuery
-        requestSearchAPI(query: defultQuery, page: 1)
-                                        
+        searchQuery = "mongodb"
     }
     
     private func pushBookDetailViewController(item: BookListItem) {
@@ -54,7 +61,7 @@ extension SearchBookViewController: UITableViewDelegate, UITableViewDataSource, 
         if indexPath.row == (searchResult?.books?.count ?? 0) - 1,
            searchResult?.total ?? 0 > searchResult?.books?.count ?? 0,
            let page = searchResult?.page,
-           let query = searchBar.text {
+            let query = searchQuery {
             requestSearchAPI(query: query, page: page + 1)
         }
         return cell
@@ -83,11 +90,19 @@ extension SearchBookViewController {
         }
         isLoading = true
         ItbookAPIImpl.shared.search(query: query, page: page) { [weak self] result in
+            defer {
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+                self?.isLoading = false
+            }
             switch result {
             case .success(let result):
                 if result.page ?? 1 == 1 {
+                    // 첫 페이지 : 결과 저장
                     self?.searchResult = result
                 } else {
+                    // 다음 페이지 : 페이지 정보 변경, 도서 목록 추가
                     self?.searchResult?.page = result.page
                     self?.searchResult?.books?.append(contentsOf: result.books ?? [])
                 }
@@ -97,10 +112,6 @@ extension SearchBookViewController {
             case .none:
                 self?.searchResult = nil
             }
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-            self?.isLoading = false
         }
     }
     
